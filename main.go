@@ -48,11 +48,9 @@ func ParallelDownload(urls chan string, numWorkers int) (map[string]SiteContent,
 			defer wg.Done()
 			for url := range urls {
 				content := FetchContent(url)
-				mu.Lock()
-				result[url] = content
-				mu.Unlock()
 
 				mu.Lock()
+				result[url] = content
 				summary += content.Price
 				mu.Unlock()
 			}
